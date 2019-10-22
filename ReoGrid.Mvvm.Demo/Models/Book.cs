@@ -25,6 +25,9 @@ namespace ReoGrid.Mvvm.Demo.Models
         [ColumnHeader(Index = 35, Text = "Type")]
         public BindingType BindingType { get; set; }
 
+        [ColumnHeader(Index = 36, Text = "OnSale")]
+        public bool IsOnSale { get; set; }
+
         [NumberFormat(DecimalPlaces = 2, NegativeStyle = NumberDataFormatter.NumberNegativeStyle.Red)]
         [ColumnHeader(Index = 40)]
         public decimal Price { get; set; }

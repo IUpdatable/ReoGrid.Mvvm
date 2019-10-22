@@ -155,6 +155,7 @@ namespace ReoGrid.Mvvm
                     if (headerAttribute != null && headerAttribute.IsVisible)
                     {
                         rangePosition.Col = headerAttribute.Index;
+                        //not work correctly 
                         switch (formatArgs.CellDataFormatFlag)
                         {
                             case CellDataFormatFlag.General:
@@ -395,55 +396,18 @@ namespace ReoGrid.Mvvm
                 PropertyInfo propertyInfo = (PropertyInfo)_Worksheet.ColumnHeaders[currentColIndex].Tag;
                 if (propertyInfo.PropertyType.BaseType == typeof(Enum))
                 {
-                    
-                    Window window = new Window();
-                    WrapPanel wrapPanel = new WrapPanel();
-                    ListBox listBox = new ListBox();
-                    listBox.Width = _ColumnWidthList.ElementAt(e.Cell.Column);
-
                     // get enum values
-                    System.Array enumValues = System.Enum.GetValues(propertyInfo.PropertyType);
-                    for (int i = 0; i < enumValues.Length; i++)
+                    List<object> enumValues = new List<object>();
+                    foreach (var item in System.Enum.GetValues(propertyInfo.PropertyType))
                     {
-                        var item = enumValues.GetValue(i);
-                        ListBoxItem listBoxItem = new ListBoxItem();
-                        listBoxItem.Content = item;
-                        listBox.Items.Add(listBoxItem);
+                        enumValues.Add(item);
                     }
-                    listBox.RenderTransform = new ScaleTransform(_Worksheet.ScaleFactor, _Worksheet.ScaleFactor);
-
-                    listBox.MouseDoubleClick += (object obj, MouseButtonEventArgs eventArgs) => {
-                        e.EditText = (listBox.SelectedValue as ListBoxItem).Content.ToString();
-                        window.DialogResult = true;
-                    };
-                    wrapPanel.Children.Add(listBox);
-                    Point point = new Point();
-                    for (int rowIndex = 0; rowIndex <= currentRowIndex + 1; rowIndex++)
-                    {
-                        point.Y += (int)(_RowHeightList.ElementAt(rowIndex) * _Worksheet.ScaleFactor);
-                    }
-                    for (int colIndex = 0; colIndex < currentColIndex; colIndex++)
-                    {
-                        point.X += (int)(_ColumnWidthList.ElementAt(colIndex) * _Worksheet.ScaleFactor);
-                    }
-                    point.X += (int)(_Worksheet.RowHeaderWidth * _Worksheet.ScaleFactor);
-                    Point screenPoint = _ReoGridControl.PointToScreen(point);
-
-                    window.Width = _Worksheet.ColumnHeaders[e.Cell.Column].Width;
-                    window.WindowStyle = WindowStyle.None;
-                    window.ResizeMode = ResizeMode.NoResize;
-                    window.BorderThickness = new Thickness(0);
-                    window.Content = wrapPanel;
-                    window.SizeToContent = SizeToContent.WidthAndHeight;
-                    window.WindowStartupLocation = WindowStartupLocation.Manual;
-                    window.Left = screenPoint.X;
-                    window.Top = screenPoint.Y;
-                    window.Loaded += (object win, RoutedEventArgs routedEventArgs) =>
-                    {
-                        wrapPanel.Width = listBox.RenderSize.Width * _Worksheet.ScaleFactor;
-                        wrapPanel.Height = listBox.RenderSize.Height * _Worksheet.ScaleFactor;
-                    };
-                    window.ShowDialog();
+                    SimulateComboBox(enumValues, e);
+                }
+                else if (propertyInfo.PropertyType == typeof(bool))
+                {
+                    List<object> values = new List<object>() { Boolean.TrueString, Boolean.FalseString };
+                    SimulateComboBox(values, e);
                 }
             }
             if (OnBeforeCellEdit != null)
@@ -465,7 +429,7 @@ namespace ReoGrid.Mvvm
             {
                 int row = e.Cell.Row;
                 int col = e.Cell.Column;
-
+                
                 AddOrUpdateOneFromUi(row, col, col);
             }
         }
@@ -539,7 +503,6 @@ namespace ReoGrid.Mvvm
                             break;
 #endif
                         }
-
                     }
                     else
                     {
@@ -557,18 +520,25 @@ namespace ReoGrid.Mvvm
 
                     }
                 }
-                if (OnBeforeChangeRecord != null && rowIndex < _Records.Count)
+
+                if (OnBeforeChangeRecord != null)
                 {
-                    bool? changed = OnBeforeChangeRecord(record, propertyInfo, value);
-                    if (!changed.HasValue || changed.Value) // if has no value or isChanged, then accept the change
+                    bool? isCancel = OnBeforeChangeRecord(record, propertyInfo, value);
+                    if (isCancel.HasValue && isCancel.Value) // if has value and cancel is true, then undo the change
                     {
-                        propertyInfo.SetValue(record, value);
+                        _Worksheet.SetCellData(rowIndex, colIndex, propertyInfo.GetValue(record));
+                        //if (rowIndex < _Records.Count)
+                        //{
+                        //    _Worksheet.SetCellData(rowIndex, colIndex, propertyInfo.GetValue(record));
+                        //}
+                        //else
+                        //{
+
+                        //}
+                        continue;
                     }
                 }
-                else
-                {
-                    propertyInfo.SetValue(record, value);
-                }
+                propertyInfo.SetValue(record, value);
             }
             if (rowIndex >= _Records.Count)
             {
@@ -646,6 +616,63 @@ namespace ReoGrid.Mvvm
                     AddOrUpdateOneFromUi(rowIndex, e.Range.StartPos.Col, e.Range.EndCol);
                 }
             }
+        }
+        #endregion
+
+        #region [SimulateComboBox] Simulate ComboBox
+        private void SimulateComboBox(List<object> list, CellBeforeEditEventArgs e)
+        {
+            int currentColIndex = e.Cell.Column;
+            int currentRowIndex = e.Cell.Row;
+            
+            Window window = new Window();
+            WrapPanel wrapPanel = new WrapPanel();
+            ListBox listBox = new ListBox();
+            listBox.SetValue( ScrollViewer.HorizontalScrollBarVisibilityProperty, ScrollBarVisibility.Hidden);
+            listBox.SetValue(ScrollViewer.VerticalScrollBarVisibilityProperty, ScrollBarVisibility.Hidden);
+            listBox.Width = _ColumnWidthList.ElementAt(e.Cell.Column);
+
+            for (int i = 0; i < list.Count; i++)
+            {
+                var item = list.ElementAt(i);
+                ListBoxItem listBoxItem = new ListBoxItem();
+                listBoxItem.Content = item;
+                listBox.Items.Add(listBoxItem);
+            }
+            listBox.RenderTransform = new ScaleTransform(_Worksheet.ScaleFactor, _Worksheet.ScaleFactor);
+
+            listBox.MouseDoubleClick += (object obj, MouseButtonEventArgs eventArgs) => {
+                e.EditText = (listBox.SelectedValue as ListBoxItem).Content.ToString();
+                window.DialogResult = true;
+            };
+            wrapPanel.Children.Add(listBox);
+            Point point = new Point();
+            for (int rowIndex = 0; rowIndex <= currentRowIndex + 1; rowIndex++)
+            {
+                point.Y += (int)(_RowHeightList.ElementAt(rowIndex) * _Worksheet.ScaleFactor);
+            }
+            for (int colIndex = 0; colIndex < currentColIndex; colIndex++)
+            {
+                point.X += (int)(_ColumnWidthList.ElementAt(colIndex) * _Worksheet.ScaleFactor);
+            }
+            point.X += (int)(_Worksheet.RowHeaderWidth * _Worksheet.ScaleFactor);
+            Point screenPoint = _ReoGridControl.PointToScreen(point);
+
+            window.Width = _Worksheet.ColumnHeaders[e.Cell.Column].Width;
+            window.WindowStyle = WindowStyle.None;
+            window.ResizeMode = ResizeMode.NoResize;
+            window.BorderThickness = new Thickness(0);
+            window.Content = wrapPanel;
+            window.SizeToContent = SizeToContent.WidthAndHeight;
+            window.WindowStartupLocation = WindowStartupLocation.Manual;
+            window.Left = screenPoint.X;
+            window.Top = screenPoint.Y;
+            window.Loaded += (object win, RoutedEventArgs routedEventArgs) =>
+            {
+                wrapPanel.Width = listBox.RenderSize.Width * _Worksheet.ScaleFactor;
+                wrapPanel.Height = listBox.RenderSize.Height * _Worksheet.ScaleFactor;
+            };
+            window.ShowDialog();
         }
         #endregion
 

@@ -55,6 +55,7 @@ namespace ReoGrid.Mvvm.Demo.ViewModels
                 book.Title = string.Format("Title {0}", i);
                 book.Author = string.Format("Author {0}", i);
                 book.BindingType = BindingType.Hardback;
+                book.IsOnSale = true;
                 book.Price = (decimal)(i * 10.1);
                 book.Pubdate = DateTime.Now;
                 _Books.Add(book);
@@ -74,6 +75,22 @@ namespace ReoGrid.Mvvm.Demo.ViewModels
         private void OnLoadedCommand(ReoGridControl reoGridControl)
         {
             _WorksheetModel = new WorksheetModel(reoGridControl, typeof(Book), _Books);
+            _WorksheetModel.OnBeforeChangeRecord += WorksheetModel_OnBeforeChangeRecord;
+        }
+
+        private bool? WorksheetModel_OnBeforeChangeRecord(IRecordModel record, System.Reflection.PropertyInfo propertyInfo, object newProperyValue)
+        {
+            if (propertyInfo.Name.Equals("Price"))
+            {
+                decimal price = Convert.ToDecimal(newProperyValue);
+                if (price > 100m) //assume the max price is 100
+                {
+                    MessageBox.Show("Max price is 100.", "Alert", MessageBoxButton.OK, MessageBoxImage.Warning);
+                    return true; // cancel the change
+                }
+            }
+
+            return null;
         }
 
         private void OnAddRecordCommand()
@@ -84,7 +101,8 @@ namespace ReoGrid.Mvvm.Demo.ViewModels
             book.Title = string.Format("Title {0}", count);
             book.Author = string.Format("Author {0}", count);
             book.BindingType = BindingType.Hardback;
-            book.Price = (decimal)(count * 10.11);
+            book.IsOnSale = true;
+            book.Price = (decimal)(count * 10.11) > 100m ? 100m :(decimal)(count * 10.11);
             book.Pubdate = DateTime.Now;
             _Books.Add(book);
         }
@@ -107,7 +125,7 @@ namespace ReoGrid.Mvvm.Demo.ViewModels
 
         private void OnEditRecordCommand()
         {
-            (_Books[0] as Book).Price += 3.33m;
+            (_Books[0] as Book).Price = new Random(DateTime.Now.Millisecond).Next(1,100);
             _WorksheetModel.UpadteRecord(_Books[0]); // invoke UpadteRecord after editing one record.
         }
 
