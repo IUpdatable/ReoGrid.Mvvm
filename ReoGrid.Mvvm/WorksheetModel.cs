@@ -13,6 +13,7 @@ using unvell.ReoGrid.DataFormat;
 using ReoGrid.Mvvm.Attributes;
 using ReoGrid.Mvvm.Interfaces;
 using System.Windows.Forms.Integration;
+using unvell.ReoGrid.Actions;
 
 namespace ReoGrid.Mvvm
 {
@@ -173,7 +174,7 @@ namespace ReoGrid.Mvvm
                                     numberFormatter.CustomNegativePrefix = numberFormatAttribute.CustomNegativePrefix;
                                     numberFormatter.CustomNegativePostfix = numberFormatAttribute.CustomNegativePostfix;
                                     _Worksheet.SetRangeDataFormat(rangePosition, CellDataFormatFlag.Number, numberFormatter);
-
+                                    //_ReoGridControl.DoAction(new SetRangeDataFormatAction(rangePosition, CellDataFormatFlag.Number, numberFormatter));
                                     break;
                                 }
                             case CellDataFormatFlag.DateTime:

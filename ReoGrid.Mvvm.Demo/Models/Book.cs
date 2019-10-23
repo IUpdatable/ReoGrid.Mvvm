@@ -28,7 +28,7 @@ namespace ReoGrid.Mvvm.Demo.Models
         [ColumnHeader(Index = 36, Text = "OnSale")]
         public bool IsOnSale { get; set; }
 
-        [NumberFormat(DecimalPlaces = 2, NegativeStyle = NumberDataFormatter.NumberNegativeStyle.Red)]
+        [NumberFormat(DecimalPlaces = 2, NegativeStyle = NumberDataFormatter.NumberNegativeStyle.Prefix_Sankaku, UseSeparator = true)]
         [ColumnHeader(Index = 40)]
         public decimal Price { get; set; }
 

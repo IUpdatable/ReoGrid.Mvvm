@@ -1,0 +1,21 @@
+<?xml version="1.0"?>
+<package >
+  <metadata>
+    <id>ReoGrid.Mvvm</id>
+    <version>$version$</version>
+    <title>ReoGrid.Mvvm</title>
+    <authors>IUpdatable</authors>
+    <owners>IUpdatable</owners>
+    <licenseUrl>https://github.com/IUpdatable/ReoGrid.Mvvm/blob/master/LICENSE</licenseUrl>
+    <projectUrl>https://github.com/IUpdatable/ReoGrid.Mvvm/</projectUrl>
+    <iconUrl>https://api.nuget.org/v3-flatcontainer/unvell.reogrid.dll/2.1.0/icon</iconUrl>
+    <requireLicenseAcceptance>false</requireLicenseAcceptance>
+    <description>a class library for the ReoGrid binding model</description>
+    <releaseNotes>initial version</releaseNotes>
+    <copyright>Copyright 2019</copyright>
+    <tags>ReoGrid Binding MVVM WPF Grid Spreadsheet Excel Drawing Chart</tags>
+    <dependencies>
+      <dependency id="unvell.ReoGridWPF.dll" version="2.1.0" />
+    </dependencies>
+  </metadata>
+</package>
