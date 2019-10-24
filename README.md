@@ -44,15 +44,18 @@ public class Book: IRecordModel
 ```
 
 **(1) Model must implement the interface `IRecordModel`.**
+
 `IRecordModel` has only one property `RowIndex`, You don't need to do anything with it.
 
-**(2) `WorksheetAttribute` is used to specify the worksheet name. **
+**(2) `WorksheetAttribute` is used to specify the worksheet name.**
+
 It's optional, class name would be set as the worksheet name if it's not set.
 
 **(3) in `ColumnHeader` Attribute, `Index` must be specified. others are optional.**
 
 **(4) `DateTimeFormat` `DateTimeFormat` are not recommended for use for now.**
-These features are not well implemented in `ReoGrid`.
+
+These features are not well implemented in `ReoGrid`.OR I have some misunderstand.
 
 #### 4. in ViewModel file:
 
