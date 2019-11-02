@@ -1,15 +1,15 @@
 
-ÏÂÃæÒÔÒ»¸öÍ¼ÊéÐÅÏ¢µÄ¼òµ¥ÏîÄ¿ÑÝÊ¾ÈçºÎÊ¹ÓÃ `ReoGrid.Mvvm`. ÍêÕû´úÂë¼ûÏîÄ¿ `ReoGrid.Mvvm.Demo`.
+ä¸‹é¢ä»¥ä¸€ä¸ªå›¾ä¹¦ä¿¡æ¯çš„ç®€å•é¡¹ç›®æ¼”ç¤ºå¦‚ä½•ä½¿ç”¨ `ReoGrid.Mvvm`. å®Œæ•´ä»£ç è§é¡¹ç›® `ReoGrid.Mvvm.Demo`.
 
-![all.gif](https://i.loli.net/2019/10/23/RnLb5wEFKOJsd4c.gif)
-<!--more-->
-#### 1. ´´½¨Ò»¸öWPFÏîÄ¿.
-#### 2. NuGet°²×° ReoGrid.Mvvm
+![all.gif](https://github.com/IUpdatable/ReoGrid.Mvvm/blob/master/all.gif)
+
+#### 1. åˆ›å»ºä¸€ä¸ªWPFé¡¹ç›®.
+#### 2. NuGetå®‰è£… ReoGrid.Mvvm
 
 ```
 Install-Package ReoGrid.Mvvm
 ```
-#### 3. ´´½¨Ò»¸öÍ¼ÊéµÄÄ£ÐÍ£¨Model£©
+#### 3. åˆ›å»ºä¸€ä¸ªå›¾ä¹¦çš„æ¨¡åž‹ï¼ˆModelï¼‰
 
 ```cs
 [WorksheetAttribute(Title = "Books")]
@@ -43,28 +43,28 @@ public class Book: IRecordModel
 
 ```
 
-**(1) Model ±ØÐëÊµÏÖ`IRecordModel`½Ó¿Ú**
+**(1) Model å¿…é¡»å®žçŽ°`IRecordModel`æŽ¥å£**
 
-`IRecordModel` Ö»ÓÐÒ»¸ö `RowIndex` ÊôÐÔ, ÄãÍêÈ«²»ÓÃ¹ÜÕâ¸öÊôÐÔ£¬ÕâÊÇ `ReoGrid.Mvvm` ÄÚ²¿ÓÃµ½µÄ¡£
+`IRecordModel` åªæœ‰ä¸€ä¸ª `RowIndex` å±žæ€§, ä½ å®Œå…¨ä¸ç”¨ç®¡è¿™ä¸ªå±žæ€§ï¼Œè¿™æ˜¯ `ReoGrid.Mvvm` å†…éƒ¨ç”¨åˆ°çš„ã€‚
 
-**(2) `WorksheetAttribute` ÓÃÀ´ËµÃ÷¹¤×÷±íµÄÃû×Ö**
+**(2) `WorksheetAttribute` ç”¨æ¥è¯´æ˜Žå·¥ä½œè¡¨çš„åå­—**
 
-¿ÉÑ¡£¬²»Ö¸¶¨¸ÃÌØÐÔ£¬ÄÇÃ´¾ÍÓÃModelÀàµÄÀàÃû×÷Îª¹¤×÷±íÃû³Æ¡£
+å¯é€‰ï¼Œä¸æŒ‡å®šè¯¥ç‰¹æ€§ï¼Œé‚£ä¹ˆå°±ç”¨Modelç±»çš„ç±»åä½œä¸ºå·¥ä½œè¡¨åç§°ã€‚
 
-**(3) `ColumnHeader`ÌØÐÔÖÐ, ±ØÐëÖ¸¶¨ `Index` ÊôÐÔ£¬ÆäËûµÄÊÇ¿ÉÑ¡µÄ¡£**
+**(3) `ColumnHeader`ç‰¹æ€§ä¸­, å¿…é¡»æŒ‡å®š `Index` å±žæ€§ï¼Œå…¶ä»–çš„æ˜¯å¯é€‰çš„ã€‚**
 
-**(4) `DateTimeFormat` `DateTimeFormat` Ä¿Ç°²»½¨ÒéÊ¹ÓÃ**
+**(4) `DateTimeFormat` `DateTimeFormat` ç›®å‰ä¸å»ºè®®ä½¿ç”¨**
 
-`ReoGrid`±¾Éí²¢Ã»ÓÐÍêÕûÊµÏÖÕâÐ©ÌØÐÔ¡£µ±È»£¬Ò²ÓÐ¿ÉÄÜÎÒÀí½âÓÐÎó¡£
+`ReoGrid`æœ¬èº«å¹¶æ²¡æœ‰å®Œæ•´å®žçŽ°è¿™äº›ç‰¹æ€§ã€‚å½“ç„¶ï¼Œä¹Ÿæœ‰å¯èƒ½æˆ‘ç†è§£æœ‰è¯¯ã€‚
 
-#### 4. ÔÚViewModelÖÐÐèÒªµÄÐÞ¸Ä:
+#### 4. åœ¨ViewModelä¸­éœ€è¦çš„ä¿®æ”¹:
 
-##### 4.1 ´´½¨Á½¸ö³ÉÔ±±äÁ¿
+##### 4.1 åˆ›å»ºä¸¤ä¸ªæˆå‘˜å˜é‡
 ```cs
 private ObservableCollection<IRecordModel> _Books;
 private WorksheetModel _WorksheetModel;
 ```
-##### 4.2 ³õÊ¼»¯
+##### 4.2 åˆå§‹åŒ–
 ```cs
 _Books = new ObservableCollection<IRecordModel>();
 for (int i = 0; i < 10; i++)
@@ -79,33 +79,34 @@ for (int i = 0; i < 10; i++)
     book.Pubdate = DateTime.Now;
     _Books.Add(book);
 }
-// ±äÁ¿ reoGridControl ÊÇ ReoGridControl µÄ¿Ø¼þÔªËØÊµÀý
+// å˜é‡ reoGridControl æ˜¯ ReoGridControl çš„æŽ§ä»¶å…ƒç´ å®žä¾‹
 _WorksheetModel = new WorksheetModel(reoGridControl, typeof(Book), _Books);
-//Èç¹ûÐèÒªÔÚÊäÈëÖµÇ°¼ì²é±äÁ¿µÄÓÐÐ§ÐÔ£¬ÄÇÃ´¾ÍÊµÏÖ¸Ãº¯Êý
-_WorksheetModel.OnBeforeChangeRecord += WorksheetModel_OnBeforeChangeRecord;
+//å¦‚æžœéœ€è¦åœ¨è¾“å…¥å€¼å‰æ£€æŸ¥å˜é‡çš„æœ‰æ•ˆæ€§ï¼Œé‚£ä¹ˆå°±å®žçŽ°è¯¥å‡½æ•°
+_WorksheetModel.OnBeforeChangeRecord += OnBeforeChangeRecord;
 ```
-##### 4.3 ÔÚ `WorksheetModel_OnBeforeChangeRecord` º¯ÊýÖÐÑÝÊ¾ÊäÈëÖµÓÐÐ§ÐÔ¼ì²é
+##### 4.3 åœ¨ `OnBeforeChangeRecord` å‡½æ•°ä¸­æ¼”ç¤ºè¾“å…¥å€¼æœ‰æ•ˆæ€§æ£€æŸ¥
 
 ```cs
-private bool? WorksheetModel_OnBeforeChangeRecord(IRecordModel record, System.Reflection.PropertyInfo propertyInfo, object newProperyValue)
+private bool? OnBeforeChangeRecord(IRecordModel record, PropertyInfo propertyInfo, object newProperyValue)
 {
     if (propertyInfo.Name.Equals("Price"))
     {
         decimal price = Convert.ToDecimal(newProperyValue);
-        if (price > 100m) //¼ÙÉè×î´ó¼Û¸ñÊÇ100
+        if (price > 100m) //å‡è®¾æœ€å¤§ä»·æ ¼æ˜¯100
         {
-            MessageBox.Show("×î´ó¼Û¸ñÊÇ 100£¬ ÇëÖØÐÂÊäÈë£¡.", "Alert", MessageBoxButton.OK, MessageBoxImage.Warning);
-            return true; // ·µ»Ø true ÔòÈ¡Ïû±¾´ÎÊäÈë
+            MessageBox.Show("æœ€å¤§ä»·æ ¼æ˜¯ 100ï¼Œ è¯·é‡æ–°è¾“å…¥ï¼.", "Alert", 
+                            MessageBoxButton.OK, MessageBoxImage.Warning);
+            return true; // è¿”å›ž true åˆ™å–æ¶ˆæœ¬æ¬¡è¾“å…¥
         }
     }
 
     return null;
 }
 ```
-##### 4.4 Ôö¼Ó¡¢É¾³ý¡¢ÒÆ¶¯¡¢±à¼­ Ä£ÐÍ£¨Model£©
+##### 4.4 å¢žåŠ ã€åˆ é™¤ã€ç§»åŠ¨ã€ç¼–è¾‘ æ¨¡åž‹ï¼ˆModelï¼‰
 
 ```cs
-// Ôö¼ÓÒ»ÌõÊéÄ¿ÐÅÏ¢
+// å¢žåŠ ä¸€æ¡ä¹¦ç›®ä¿¡æ¯
 int count = _Books.Count;
 Book book = new Book();
 book.Id = count;
@@ -117,19 +118,20 @@ book.Price = (decimal)(count * 10.11) > 100m ? 100m :(decimal)(count * 10.11);
 book.Pubdate = DateTime.Now;
 _Books.Add(book);
 
-// ÒÆ³ýÒ»ÌõÊéÄ¿ÐÅÏ¢
+// ç§»é™¤ä¸€æ¡ä¹¦ç›®ä¿¡æ¯
 if (_Books.Count > 0)
 {
     _Books.RemoveAt(_Books.Count - 1);
 }
 
-// ÒÆ¶¯Ò»ÌõÊéÄ¿ÐÅÏ¢
+// ç§»åŠ¨ä¸€æ¡ä¹¦ç›®ä¿¡æ¯
 if (_Books.Count > 2)
 {
     _Books.Move(0, _Books.Count - 1);
 }
 
-// ±à¼­Ò»ÌõÊéÄ¿ÐÅÏ¢
+// ç¼–è¾‘ä¸€æ¡ä¹¦ç›®ä¿¡æ¯
 (_Books[0] as Book).Price = new Random(DateTime.Now.Millisecond).Next(1,100);
-_WorksheetModel.UpadteRecord(_Books[0]); // ±à¼­Íê Ä£ÐÍ£¨Model£© Ö®ºóÒªµ÷ÓÃ UpadteRecord º¯Êý½«Ä£ÐÍ£¨Model£©µÄ±ä»¯Í¬²½µ½ÊÓÍ¼£¨View£©ÖÐ
+// ç¼–è¾‘å®Œ æ¨¡åž‹ï¼ˆModelï¼‰ ä¹‹åŽè¦è°ƒç”¨ UpadteRecord å‡½æ•°å°†æ¨¡åž‹ï¼ˆModelï¼‰çš„å˜åŒ–åŒæ­¥åˆ°è§†å›¾ï¼ˆViewï¼‰ä¸­
+_WorksheetModel.UpadteRecord(_Books[0]); 
 ```
