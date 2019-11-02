@@ -1,8 +1,10 @@
 
+[中文版说明](https://github.com/IUpdatable/ReoGrid.Mvvm/blob/master/README-CN.md)
+
 Here is demo for book information to demonstrate the use of `ReoGrid.Mvvm`. The complete source code is in the project `ReoGrid.Mvvm.Demo`.
 
-![all.gif](https://i.loli.net/2019/10/23/RnLb5wEFKOJsd4c.gif)
-<!--more-->
+![all.gif](https://github.com/IUpdatable/ReoGrid.Mvvm/blob/master/all.gif)
+
 #### 1. create a new WPF project.
 #### 2. insatll ReoGrid.Mvvm
 
@@ -82,23 +84,22 @@ for (int i = 0; i < 10; i++)
 // reoGridControl is the ReoGridControl control instance
 _WorksheetModel = new WorksheetModel(reoGridControl, typeof(Book), _Books);
 //If you want to check the validity of the input variables, you can implement the function.
-_WorksheetModel.OnBeforeChangeRecord += WorksheetModel_OnBeforeChangeRecord;
+_WorksheetModel.OnBeforeChangeRecord += OnBeforeChangeRecord;
 ```
-##### 4.3 implement the `WorksheetModel_OnBeforeChangeRecord`
+##### 4.3 implement the `OnBeforeChangeRecord`
 
 ```cs
-private bool? WorksheetModel_OnBeforeChangeRecord(IRecordModel record, System.Reflection.PropertyInfo propertyInfo, object newProperyValue)
+private bool? OnBeforeChangeRecord(IRecordModel record, PropertyInfo propertyInfo, object newValue)
 {
     if (propertyInfo.Name.Equals("Price"))
     {
-        decimal price = Convert.ToDecimal(newProperyValue);
+        decimal price = Convert.ToDecimal(newValue);
         if (price > 100m) //assume the max price is 100
         {
             MessageBox.Show("Max price is 100.", "Alert", MessageBoxButton.OK, MessageBoxImage.Warning);
             return true; // cancel the change
         }
     }
-
     return null;
 }
 ```
@@ -131,5 +132,6 @@ if (_Books.Count > 2)
 
 // edit a book
 (_Books[0] as Book).Price = new Random(DateTime.Now.Millisecond).Next(1,100);
-_WorksheetModel.UpadteRecord(_Books[0]); // invoke UpadteRecord after editing one record.
+// invoke UpadteRecord after editing one record.
+_WorksheetModel.UpadteRecord(_Books[0]); 
 ```
