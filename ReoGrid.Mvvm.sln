@@ -7,6 +7,14 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ReoGrid.Mvvm", "ReoGrid.Mvv
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ReoGrid.Mvvm.Demo", "ReoGrid.Mvvm.Demo\ReoGrid.Mvvm.Demo.csproj", "{8EE922CE-9E52-4B5B-80E8-63BEC8C8F504}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Src", "Src", "{4FF3DB34-8517-4D84-856B-0DEF4A5401F2}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Resources", "Resources", "{C9E43A37-B307-4054-8A40-802260446225}"
+	ProjectSection(SolutionItems) = preProject
+		all.gif = all.gif
+		README-CN.md = README-CN.md
+	EndProjectSection
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -24,6 +32,10 @@ Global
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{4910C133-FB9E-4AAA-A2D1-23481B437330} = {4FF3DB34-8517-4D84-856B-0DEF4A5401F2}
+		{8EE922CE-9E52-4B5B-80E8-63BEC8C8F504} = {4FF3DB34-8517-4D84-856B-0DEF4A5401F2}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {567529A4-35A1-4C4C-A2CC-AD0B4AF98A3A}
